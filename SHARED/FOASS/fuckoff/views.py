@@ -16,6 +16,6 @@ def index(request):
 		r = requests.get("https://www.foaas.com/"+search)
 		return HttpResponse(r.text)
 	#return render(request, 'hello.html')
-	t = Template(<form method="POST"><input type=text" name="search"><input type="submit></form>)
+	t = Template(<form method="POST"><input type="text" name="search"><input type="submit"></form>)
 	html = t.render(Context())
 	return HttpResponse(html)
