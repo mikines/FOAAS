@@ -11,4 +11,4 @@ from requests import *
 def index(request):
 #	return HttpResponse("Hello, world. You're at the polls index.")
 	url = "https://www.foaas.com/asshole/:from me"
-	return reqeusts.get(url)
+	return requests.get(url)
