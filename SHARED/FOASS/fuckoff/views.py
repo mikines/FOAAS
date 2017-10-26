@@ -18,5 +18,5 @@ def index(request):
 	#return render(request, 'hello.html')
 	#t = Template(<form method="POST"><input type="text" name="search"><input type="submit"></form>)
 	#html = t.render(Context())
-	html = "<form method="POST"><input type="text" name="search"><input type="submit"></form>"
+	html = "<html><form method="POST"><input type="text" name="search"><input type="submit" value="submit"></form></html>"
 	return HttpResponse(html)
