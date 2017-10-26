@@ -13,7 +13,7 @@ def index(request):
 #	return HttpResponse("Hello, world. You're at the polls index.")
 	if request.method == 'POST':
 		search = request.POST['search']
-		r = requests.get("https://www.foaas.com/"+search)
+		r = requests.get("https://www.foaas.com/"+search+"/:from")
 		return HttpResponse(r.text)
 	#return render(request, 'hello.html')
 	#t = Template(<form method="POST"><input type="text" name="search"><input type="submit"></form>)
