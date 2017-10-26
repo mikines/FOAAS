@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.template import Template,Context
 
 # Create your views here.
 
@@ -14,4 +15,7 @@ def index(request):
 		search = request.POST['search']
 		r = requests.get("https://www.foaas.com/"+search)
 		return HttpResponse(r.text)
-	return render(request, 'hello.html')
+	#return render(request, 'hello.html')
+	t = Template(<form method="POST"><input type=text" name="search"><input type="submit></form>)
+	html = t.render(Context())
+	return HttpResponse(html)
