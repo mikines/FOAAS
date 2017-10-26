@@ -14,4 +14,4 @@ def index(request):
 		search = request.POST['search']
 		r = requests.get("https://www.foaas.com/"+search)
 		return HttpResponse(r.text)
-	return render(request, '/hello.html')
+	return render(request, 'hello.html')
