@@ -18,5 +18,6 @@ def index(request):
 	#return render(request, 'hello.html')
 	#t = Template(<form method="POST"><input type="text" name="search"><input type="submit"></form>)
 	#html = t.render(Context())
-	html = '<html><form method="POST"><input type="text" name="search"><input type="submit" value="submit"></form></html>'
+	t = Template('<html><form method="POST"><input type="text" name="search"><input type="submit" value="submit"></form></html>')
+	html = t.render(Context({% csrf_token %})
 	return HttpResponse(html)
