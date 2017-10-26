@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 
-def index(request):
+def index(requests):
 #	return HttpResponse("Hello, world. You're at the polls index.")
 	url = "https://www.foaas.com/asshole/:from me"
 	return requests.get(url)
