@@ -6,9 +6,9 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.http import HttpResponse
-from requests import *
+import requests
 
 def index(request):
 #	return HttpResponse("Hello, world. You're at the polls index.")
-	url = "https://www.foaas.com/asshole/:from me"
-	return requests.get(url)
+	r = requests.get("https://www.foaas.com/asshole/:from me")
+	return r.text
