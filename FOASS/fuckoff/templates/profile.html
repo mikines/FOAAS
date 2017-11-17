@@ -20,16 +20,36 @@ table{
 h1{
   margin-left: 50px;
 }
+#targetContainer{
+  padding-top:100px;
+  padding-bottom:50px;
+  margin-left:100px;
+}
 </style>
 
 <body>
 
   <button id="logout" type="submit" style="text-align: right">log out</button>
   <h1>your profile:</h1>
-  <table width=700 id="table1">
-
+<div id=targetContainer>
+  <table width=700 id="sms_targets">
+	<th>Name</th>
+    <th>Phone Number</th>
+    <th>Message</th>
+    <th>Frequency</th>
+  </table>
+  <button id=addsmsnum type=submit>
+</div>
+<div id=targetContainer>
+  <table width=700 id="tweet_targets">
+	<th>Name</th>
+	<th>Twitter @username</th>
+	<th>Message</th>
+	<th>Frequency</th>
 
   </table>
-<script src="foaas.js"></script>
+</div>
+
+<script src="profile.js"></script>
 </body>
 </html>
