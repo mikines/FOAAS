@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<title>FOAAS</title>
+<style>
+#logout{
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  right: 0;
+
+}
+table{
+  border-style: double;
+}
+</style>
+
+<body>
+  
+  //third party authentication
+<script src="//adodson.com/hello.js/dist/hello.all.js"></script>
+<script>
+  
+  hello.init({
+     'twitter': secrets.twitter_key() //not actually working function 
+    
+  });
+
+ 
+  hello.on('auth.login', function(auth) {
+    alert(JSON.stringify(auth)); 
+
+    hello(auth.network).api('me').then(function(r) {
+      alert(JSON.stringify(r));
+    });
+  });
+
+  function tw_login() {
+    hello('twitter').login().then(function() {}, function(e) {});
+  }
+</script>
+    
+
+<button class="twBtn" onclick="tw_login()">twitter</button>
+<!--button class="twBtn" onclick="hello('twitter').login()">twitter</button-->
+  <button id="logout" type="submit" style="text-align: right">log out</button>
+  <h1>your customization for</h1>
+  <table id="table2" width=400></table>
+  <script src="foaas3.js"></script>
+  </body>
+</html>
