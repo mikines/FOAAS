@@ -16,7 +16,7 @@
 	<input id=username type=text placeholder="Enter your username">
 	<label><b>Password</b></label>
 	<input id=password type=password placeholder="Enter your password">
-	<button type="submit">Log in</button>
+	<form method=post>{% csrf_token %}<button type="submit">Log in</button></form>
 </div>
 
 

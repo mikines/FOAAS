@@ -28,9 +28,10 @@ h1{
 </style>
 
 <body>
+{% if user.is_authenticated %}
 
   <button id="logout" type="submit" style="text-align: right">log out</button>
-  <h1>your profile:</h1>
+  <h1> {{user.username}}'sprofile:</h1>
 <div id=targetContainer>
   <table width=700 id="sms_targets">
 	<th>Name</th>
@@ -49,7 +50,10 @@ h1{
 
   </table>
 </div>
+{% else %}
 
+	not logged in
+{% endif %}
 <script src="profile.js"></script>
 </body>
 </html>
