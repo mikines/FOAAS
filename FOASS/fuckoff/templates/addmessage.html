@@ -1,14 +1,14 @@
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- todo: when choosing every, other options disabled; allow multiple selections (with exception of every)-->
+<form method=post>
+{% csrf_token %}
 search for a keyword
 <input type=text id=fucksearch name=fucksearchs>
 <div id=searchresults></div>
 </br>
-
-<form method=post>
 Month:<select name=month>
-	<option value='every'>Every Month</option>
+	<option value='*'>Every Month</option>
 	<option value='1'>January</option>
 	<option value='2'>February</option>
 	<option value='3'>March</option>
@@ -24,7 +24,7 @@ Month:<select name=month>
 	</select>
 </br>
 Weekday: <select name=weekday>
-	<option value='every'>Every day</option>
+	<option value='*'>Every day</option>
 	<option value='0'>Sunday</option>
     <option value='1'>Monday</option>
     <option value='2'>Tuesday</option>
@@ -34,13 +34,13 @@ Weekday: <select name=weekday>
     <option value='6'>Saturday</option>
 	</select>
 </br>
-Day: Enter a number 1-30/31<input type=number name=day min=1 max=24>
+Day: Enter a number 1-30/31<input type=number name=day min=1 max=24 value=*>
 </br>
-Hour: Enter a number 1-24  <input type=number name=hour min=1 max=24>
+Hour: Enter a number 1-24  <input type=number name=hour min=1 max=24 value=*>
 </br>
-Minute: Enter a number 1-60 <input type=number name=minute min=1 max=60>
+Minute: Enter a number 1-60 <input type=number name=minute min=1 max=60 value=*>
 </br>
-Second: Enter a number 1-60 <input type=number name=minute min=1 max=60>
+Second: Enter a number 1-60 <input type=number name=second min=1 max=60 value=*>
 </br>
 
 <button action=submit>submit</button>
