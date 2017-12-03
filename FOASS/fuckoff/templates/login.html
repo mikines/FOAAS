@@ -11,11 +11,14 @@
 
 <p id="demo"></p>
 <div id=login>
+{{ message }}
 <h2>log in with your twitter account</h2>
+<!--
 	<label><b>Username</b></label>
 	<input id=username type=text placeholder="Enter your username">
 	<label><b>Password</b></label>
 	<input id=password type=password placeholder="Enter your password">
+-->
 	<form method=post>{% csrf_token %}<button type="submit">Log in</button></form>
 </div>
 

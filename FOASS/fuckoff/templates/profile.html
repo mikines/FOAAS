@@ -30,7 +30,7 @@ h1{
 <body>
 {% if user.is_authenticated %}
 
-  <button id="logout" type="submit" style="text-align: right">log out</button>
+  <a href="/logout">logout</a>
   <h1> {{user.username}}'sprofile:</h1>
 <div id=targetContainer>
   <table width=700 id="sms_targets">
