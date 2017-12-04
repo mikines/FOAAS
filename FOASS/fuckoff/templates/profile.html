@@ -20,11 +20,22 @@ table{
 h1{
   margin-left: 50px;
 }
-#targetContainer{
-  padding-top:100px;
-  padding-bottom:50px;
-  margin-left:100px;
+#user{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+#user td, #user th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
 
+#user th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: black;
+    color: white;
 
 }
 </style>
@@ -85,7 +96,7 @@ Weekday: <select name=weekday>
     <option value='6'>Saturday</option>
 	</select>
 </br>
-Day: Enter a number 1-30/31<input type=number name=day min=1 max=31 value=*>
+Day: Enter a number 1-31<input type=number name=day min=1 max=31 value=*>
 </br>
 Hour: Enter a number 1-24  <input type=number name=hour min=1 max=24 value=*>
 </br>
