@@ -3,6 +3,7 @@
 <!-- todo: when choosing every, other options disabled; allow multiple selections (with exception of every)-->
 <form method=post>
 {% csrf_token %}
+	<input type=hidden value={{user_target_phone}} name=phone>
 search for a keyword
 <input type=text id=fucksearch name=fucksearchs>
 <div id=searchresults></div>

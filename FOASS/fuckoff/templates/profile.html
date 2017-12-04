@@ -36,21 +36,24 @@ h1{
   <a href="/logout">logout</a>
   <h1> {{user.username}}'s profile:</h1>
 <div id=targetContainer>
+<tr>
 <th>
 	<td>Platform</td>
 	<td>Contact</td>
 	<td>Message</td>
 	<td>Frequency</td>
+</tr>
 </th>
+{% for phone,mess in user_targets_phone_mess %}
 <tr>
 	<button id=messageEditFormbtn>Edit</button>
-	<td>{{user_target_phone}}</td>
-	<td>{{ user_targets_sms }}</td>
+	<td>{{ phone }}</td>
+	<td>{{ mess }}</td>
 
 <div id=messageEditForm style=display:none>
 	<form method=post>
 {% csrf_token %}
-	<input type=hidden value={{user_target_phone}} name=phone>
+	<input type=hidden value={{phone}} name=phone>
 search for a keyword
 <input type=text id=fucksearch name=fucksearchs>
 <div id=searchresults></div>
@@ -94,7 +97,7 @@ Second: Enter a number 1-60 <input type=number name=second min=1 max=60 value=*>
 <button action=submit>submit</button>
 </form>
 </div>
-
+{% endfor %}
 
 </tr>
 
@@ -111,6 +114,16 @@ $(document).ready(function(){
 		$("#messageEditForm").toggle();
 	});
 });
+
+$(document).ready(function(){
+		$("#fucksearch").keyup(function() {
+		var txt = $("#fucksearch").val();
+		$.post("allfucks",{'word':txt},function(result){
+			$("#searchresults").html(result);
+		});
+	});	
+});
+
 </script>
 </body>
 </html>

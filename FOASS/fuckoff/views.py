@@ -93,12 +93,71 @@ def show_profile(request):
 	uid = cur.fetchone()
 	cur.execute(u"SELECT phone,text,frequency FROM message JOIN target ON message.tid=target.tid WHERE message.uid = '%s'" % uid)
 	user_targets_sms = cur.fetchall()
+	user_target_phone = []
+	user_target_mess = []
+	for i in user_targets_sms:
+		user_target_phone += [i[0]]
+		user_target_mess += [i[1:]]
+	print "mess= ", user_target_mess
+	print "phone= ", user_target_phone
+	user_targets_phone_mess = zip(user_target_phone,user_target_mess)
 	#cur.execute("SELECT ")
 	#user_targets_phone = cur.fetchall()
 	#for i in user_targets_sms[1]:
 	#	i = get_fucks_text(i) #replace /.. with actual text
 	#print user_targets_sms
-	return render(request, u'profile.html',{'user_targets_sms':user_targets_sms})
+	if request.method == 'POST':
+		try:
+			weekday = str(int(request.POST[u'weekday']) - 1)
+		except:
+			weekday = '*'
+		try:
+			hour = int(request.POST[u'hour']) - 1
+		except:
+			hour = u'*'
+		try:
+			minute = request.POST[u'minute'] - 1
+		except:
+			minute = u'*'
+		try:
+			day = request.POST[u'day'] + 0
+		except:
+			day = u'*'
+		try:
+			month = request.POST[u'month'] + 0
+		except:
+			month = '*'
+		phone = request.POST['phone']
+		frequency = minute + " " + hour + " "  + day + " " + month + " " + weekday
+		print frequency
+		text = request.POST[u'fucksearchs']
+		param = inner_get_all_fucks(text)[0]
+		# MAKE MESSAGE TUPLE
+		# get tid from phone number
+		cur.execute('SELECT uid from user where username = "%s"' % request.user.username)
+		uid = cur.fetchone()[0]
+		cur.execute('SELECT tid FROM target WHERE phone = "%s"' % phone)
+		tid = cur.fetchone()[0]
+		cur.execute('SELECT message_id FROM message WHERE uid = "%s" AND tid = "%s"' % (uid,tid))
+		mid = cur.fetchone()[0]
+		
+		my_cron = CronTab(user=secrets.cron_user())
+		if cur.execute("SELECT message_id FROM message WHERE uid = '%s' AND tid = '%s'" % (uid,tid)):
+			cur.execute("UPDATE message SET text = '%s', frequency = '%s' WHERE uid = '%s' AND tid = '%s'" % (param,frequency,uid,tid))
+			my_cron.remove_all(comment='%s' % mid)
+		else:
+			cur.execute('INSERT INTO message (text,uid,tid,frequency) VALUES ("%s","%s","%s","%s")' % (param,uid,tid,frequency))
+		db.commit()
+		#if cur.execute('SELECT ') # NEED TARGET
+		#for job in my_cron:
+	#		print job
+		# get mid
+		# get command
+		job = my_cron.new(command= 'python /home/FOAAS/FOASS/fuckoff/fuckSender.py %s' % mid,comment='%s' % mid)
+		print "Freq ", frequency
+		job.setall(frequency)
+		my_cron.write()
+	return render(request, u'profile.html',{'user_targets_phone_mess':user_targets_phone_mess})#{'user_targets_sms':user_targets_sms,'user_target_phone':user_target_phone})
 
 @login_required
 def addtarget(request):
@@ -121,33 +180,9 @@ def addtarget(request):
 
 @login_required
 def addmessage(request):
-    if request.method == u'POST':
-        month = request.POST[u'month']
-        try:
-            weekday = request.POST[u'weekday'] - 1
-            hour = request.POST[u'hour'] - 1
-            minute = request.POST[u'minute'] - 1
-            sec = request.POST[u'second'] - 1
-            day = request.POST[u'day'] + 0
-        except:
-            weekday = request.POST[u'weekday']
-            hour = u'*'
-            minute = u'*'
-            sec = u'*'
-            day = u'*'
-        frequency = minute + hour + day + month + weekday
-        text = request.POST[u'fucksearchs']
-        param = inner_get_all_fucks(text)[0]
-# MAKE MESSAGE TUPLE
-# get tid from phone number
-        uid = cur.execute('SELECT uid from user where username = "%s"' % request.user.username)
-        cur.execute('INSERT INTO message(text,uid,tid,frequency) VALUES ("%s","%s","%s","%s")' % (param,uid,tid,frequency))
-        #if cur.execute('SELECT ') # NEED TARGET
-        my_cron = CronTab(user=secrets.cron_user())
-        job = my_cron.new(command= '',comment=mid)
-        job.setall(time)
-        print day
-        print u'hour=', hour
+    #if request.method == u'POST':
+                #print day
+        #print u'hour=', hour
     return render(request, u'addmessage.html')
 
 
