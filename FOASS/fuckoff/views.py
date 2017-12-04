@@ -84,26 +84,42 @@ def get_fuck_text(param):
 
 
 def show_profile(request):
-    if request.user.is_authenticated():
-        user = request.user
-    else:
-        message = u'You need to login!'
-        return render(request, u'login.html', {u'message': message})
-    messages = cur.execute(u"SELECT * FROM message WHERE uid = '%s'" % user.username)
-    print messages
-    return render(request, u'profile.html')
+	if request.user.is_authenticated():
+		user = request.user
+	else:
+		message = u'You need to login!'
+		return render(request, u'login.html', {u'message': message})
+	cur.execute("SELECT uid from user where username = '%s'" % user.username)
+	uid = cur.fetchone()
+	cur.execute(u"SELECT phone,text,frequency FROM message JOIN target ON message.tid=target.tid WHERE message.uid = '%s'" % uid)
+	user_targets_sms = cur.fetchall()
+	#cur.execute("SELECT ")
+	#user_targets_phone = cur.fetchall()
+	#for i in user_targets_sms[1]:
+	#	i = get_fucks_text(i) #replace /.. with actual text
+	#print user_targets_sms
+	return render(request, u'profile.html',{'user_targets_sms':user_targets_sms})
 
-
+@login_required
 def addtarget(request):
     if request.method == u'POST':
         name = request.POST[u'tname']
+        print name
         phone = request.POST[u'tphone']
         twitter = request.POST[u'twit']
         cur.execute(u'INSERT INTO target (tname,phone,twitter) values (%s,%s,%s)', (name, phone, twitter))
         db.commit()
+        cur.execute("SELECT tid FROM target WHERE phone = '%s'" % (phone))
+        tid = cur.fetchone()
+        print tid
+        cur.execute("SELECT uid FROM user WHERE username = '%s'" % request.user.username)
+        uid = cur.fetchone()
+        print "uid= ", uid
+        cur.execute("INSERT INTO message (uid,tid) VALUES (%s,%s)", (uid,tid))
+        db.commit()
     return render(request, u'addtarget.html')
 
-
+@login_required
 def addmessage(request):
     if request.method == u'POST':
         month = request.POST[u'month']
@@ -119,11 +135,19 @@ def addmessage(request):
             minute = u'*'
             sec = u'*'
             day = u'*'
-
-        print day
-        print u'hour=', hour
+        frequency = minute + hour + day + month + weekday
         text = request.POST[u'fucksearchs']
         param = inner_get_all_fucks(text)[0]
+# MAKE MESSAGE TUPLE
+# get tid from phone number
+        uid = cur.execute('SELECT uid from user where username = "%s"' % request.user.username)
+        cur.execute('INSERT INTO message(text,uid,tid,frequency) VALUES ("%s","%s","%s","%s")' % (param,uid,tid,frequency))
+        #if cur.execute('SELECT ') # NEED TARGET
+        my_cron = CronTab(user=secrets.cron_user())
+        job = my_cron.new(command= '',comment=mid)
+        job.setall(time)
+        print day
+        print u'hour=', hour
     return render(request, u'addmessage.html')
 
 

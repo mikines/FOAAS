@@ -24,36 +24,93 @@ h1{
   padding-top:100px;
   padding-bottom:50px;
   margin-left:100px;
+
+
 }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <body>
 {% if user.is_authenticated %}
 
   <a href="/logout">logout</a>
-  <h1> {{user.username}}'sprofile:</h1>
+  <h1> {{user.username}}'s profile:</h1>
 <div id=targetContainer>
-  <table width=700 id="sms_targets">
-	<th>Name</th>
-    <th>Phone Number</th>
-    <th>Message</th>
-    <th>Frequency</th>
-  </table>
-  <button id=addsmsnum type=submit>
-</div>
-<div id=targetContainer>
-  <table width=700 id="tweet_targets">
-	<th>Name</th>
-	<th>Twitter @username</th>
-	<th>Message</th>
-	<th>Frequency</th>
+<th>
+	<td>Platform</td>
+	<td>Contact</td>
+	<td>Message</td>
+	<td>Frequency</td>
+</th>
+<tr>
+	<button id=messageEditFormbtn>Edit</button>
+	<td>{{user_target_phone}}</td>
+	<td>{{ user_targets_sms }}</td>
 
-  </table>
+<div id=messageEditForm style=display:none>
+	<form method=post>
+{% csrf_token %}
+	<input type=hidden value={{user_target_phone}} name=phone>
+search for a keyword
+<input type=text id=fucksearch name=fucksearchs>
+<div id=searchresults></div>
+</br>
+Month:<select name=month>
+	<option value='*'>Every Month</option>
+	<option value='1'>January</option>
+	<option value='2'>February</option>
+	<option value='3'>March</option>
+	<option value='4'>April</option>
+    <option value='5'>May</option>
+    <option value='6'>June</option>
+    <option value='7'>July</option>
+    <option value='8'>August</option>
+    <option value='9'>September</option>
+    <option value='10'>October</option>
+    <option value='11'>November</option>
+    <option value='12'>December</option>
+	</select>
+</br>
+Weekday: <select name=weekday>
+	<option value='*'>Every day</option>
+	<option value='0'>Sunday</option>
+    <option value='1'>Monday</option>
+    <option value='2'>Tuesday</option>
+    <option value='3'>Wednesday</option>
+    <option value='4'>Thursday</option>
+    <option value='5'>Friday</option>
+    <option value='6'>Saturday</option>
+	</select>
+</br>
+Day: Enter a number 1-30/31<input type=number name=day min=1 max=31 value=*>
+</br>
+Hour: Enter a number 1-24  <input type=number name=hour min=1 max=24 value=*>
+</br>
+Minute: Enter a number 1-60 <input type=number name=minute min=1 max=60 value=*>
+</br>
+Second: Enter a number 1-60 <input type=number name=second min=1 max=60 value=*>
+</br>
+
+<button action=submit>submit</button>
+</form>
+</div>
+
+
+</tr>
+
 </div>
 {% else %}
 
 	not logged in
 {% endif %}
 <script src="profile.js"></script>
+<script>
+
+$(document).ready(function(){
+	$("#messageEditFormbtn").click(function(){
+		$("#messageEditForm").toggle();
+	});
+});
+</script>
 </body>
 </html>
