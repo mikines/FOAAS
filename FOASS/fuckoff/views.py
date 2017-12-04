@@ -30,7 +30,7 @@ request_token_url = u'https://api.twitter.com/oauth/request_token'
 access_token_url = u'https://api.twitter.com/oauth/access_token'
 authenticate_url = u'https://api.twitter.com/oauth/authenticate'
 
-def login(request, message=u''):
+def login(request, message=''):
     if request.method == u'POST':
         return twit_login(request)
     if request.user.is_authenticated():
@@ -52,7 +52,7 @@ def twit_login(request):
 def twit_logout(request):
     logout(request)
     message = u'You have logged out.'
-    return login(request, message=message)
+    return HttpResponseRedirect('/')
 
 
 def twit_auth(request):
@@ -88,7 +88,7 @@ def show_profile(request):
 		user = request.user
 	else:
 		message = u'You need to login!'
-		return render(request, u'login.html', {u'message': message})
+		return login(request,message)
 	cur.execute("SELECT uid from user where username = '%s'" % user.username)
 	uid = cur.fetchone()
 	cur.execute(u"SELECT phone,text,frequency FROM message JOIN target ON message.tid=target.tid WHERE message.uid = '%s'" % uid)
