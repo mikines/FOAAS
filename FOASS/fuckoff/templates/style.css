@@ -12,7 +12,7 @@
   color: white;
   text-indent: 3em; 
   background-color: #000000
-  animation : float 4s;
+  animation: float 4s;
   -webkit-animation: float 4s;
 }
 @keyframes float{
@@ -28,7 +28,7 @@
 }
   h1{
     margin: 0;
-    color : black;
+    color: black;
     text-align: center;
     background-color: #008cba
 }
