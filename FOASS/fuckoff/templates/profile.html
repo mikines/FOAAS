@@ -4,9 +4,9 @@
 <style>
 #logout{
   padding: 10px 20px;
-  position: fixed;
+  position: absolute;
   top: 0;
-  right: 0;
+  left: 100%;
 
 }
 #add{
@@ -47,15 +47,17 @@ h1{
   <a href="/logout">logout</a>
   <h1> {{user.username}}'s profile:</h1>
 <div id=targetContainer>
-<table>
-<tr>
-<th>
-	<td>Platform</td>
-	<td>Contact</td>
-	<td>Message</td>
-	<td>Frequency</td>
-</tr>
-</th>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Platform</th>
+      <th scope="col">Contact</th>
+      <th scope="col">Message</th>
+      <th scope="col">Frequency</th>
+    </tr>
+  </thead>
+  <tbody>
+  
 {% for platform,contact,mess,freq in user_targets_phone_mess %}
 <tr>
 	<td><button id={{contact}}>Edit</button></td>
