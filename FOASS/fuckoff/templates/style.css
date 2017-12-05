@@ -1,5 +1,5 @@
   button {
-    background-color: #4CAF50;
+    background-color: #006400;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -10,8 +10,8 @@
  h2{
   margin top: 0;
   color: white;
-   text-indent: 3em; 
-  background-color: #3b5998
+  text-indent: 3em; 
+  background-color: #000000
   animation : float 4s;
   -webkit-animation: float 4s;
 }
@@ -28,8 +28,9 @@
 }
   h1{
     margin: 0;
-    color : white;
-    background-color: #3b5998
+    color : black;
+    text-align: center;
+    background-color: #008cba
 }
   h3 {
     display: block;
