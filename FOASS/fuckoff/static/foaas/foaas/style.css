@@ -1,0 +1,40 @@
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  h1{
+    color : white;
+
+    background-color: #007ee5
+  }
+  h2{
+    color : white;
+    text-indent: 5em; 
+    background-color: #007ee5
+}
+  h3 {
+    display: block;
+    font-size: 1em;
+
+    font-weight: bold;
+}
+  #login {
+    margin:auto;
+    width:500px;
+    height:500px;
+}
+  #username, #password {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 12px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+
