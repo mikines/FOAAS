@@ -62,7 +62,7 @@ def twit_auth(request):
     client = oauth.Client(consumer, token)
     resp, content = client.request(access_token_url, u'GET')
     if resp[u'status'] != u'200':
-        print content
+        #print content
         raise Exception(u'Invalid response from Twitter.')
     access_token = dict(cgi.parse_qsl(content))
     if cur.execute(u"SELECT username FROM user where username = '%s'" % access_token[u'screen_name']):
