@@ -7,11 +7,24 @@
     cursor: pointer;
     width: 100%;
   }
-  h1{
-    margin: 0;
-    color : white;
-    background-color: #3b5998
-  }
+ h1{
+  margin: 0;
+  color: white;
+  background-color: #3b5998
+  animation : float 4s;
+  -webkit-animation: float 4s;
+}
+@keyframes float{
+  0%{opacity:100%;}
+  50%{opacity:0%;}
+  100%{opacoty:100%;}
+
+}
+@-webkit-keyframes float{
+  0%{opacity:100%;}
+  50%{opacity:0%;}
+  100%{opacoty:100%;}
+}
   h2{
     margin top: 0;
     color : white;
