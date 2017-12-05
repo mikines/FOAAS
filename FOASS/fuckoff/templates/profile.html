@@ -28,7 +28,7 @@ h1{
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
@@ -75,10 +75,15 @@ h1{
 
 </tr>
 </table>
-<div id=messageEditForm style=display:none>
+
+</div>
+
+</div>
+<div class=container id=messageEditForm style=display:none;text-align:center;padding-top:30px;>
 	<form method=post>
 {% csrf_token %}
-<input type=text value="" name=phone id=hidcontact readonly>
+
+<h4 style=txt-align:center;>Editing message settings for <input type=text value="" name=phone id=hidcontact readonly style=border:none;></h4>
 search for a keyword
 <input type=text id=fucksearch name=fucksearchs>
 <div id=searchresults></div>
@@ -123,6 +128,7 @@ Second: Enter a number 1-60 <input type=number name=second min=0 max=60 value=* 
 </form>
 </div>
 
+
 <div class=container style=padding-top:35px;>
 <h3 style=text-align:center>Add a target</h3>
 <form method=post style=text-align:center;>
@@ -139,7 +145,6 @@ Twitter:
 
 
 
-</div>
 {% else %}
 
 	not logged in
@@ -147,12 +152,24 @@ Twitter:
 <script src="profile.js"></script>
 <script>
 
+$(document).ready(function(){
+		$("#fucksearch").keyup(function() {
+		var txt = $("#fucksearch").val();
+		$.post("allfucks",{'word':txt},function(result){
+			//$("#searchresults").html(result);
+			document.getElementById('searchresults').innerHTML = result;
+		});
+	});	
+});
+
+
 var btn_name="";
 
-$("#submitbtn").click(function() {
+$(document).ready(function(){
+	$("#submitbtn").click(function() {
 	$.post("addmessage",{'phone':btn_name});
 	});
-
+});
 
 $(document).ready(function(){
 	$("button[id^='+']").click(function(){
@@ -168,15 +185,6 @@ $(document).ready(function(){
         $("#hidcontact").val(btn_name);
         $("#messageEditForm").toggle();
     });
-});
-
-$(document).ready(function(){
-		$("#fucksearch").keyup(function() {
-		var txt = $("#fucksearch").val();
-		$.post("allfucks",{'word':txt},function(result){
-			$("#searchresults").html(result);
-		});
-	});	
 });
 
 $(document).ready( function() {

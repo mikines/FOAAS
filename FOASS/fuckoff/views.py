@@ -119,8 +119,14 @@ def show_profile(request):
 	#print user_targets_sms
 	if request.method == 'POST' and 'delete' in request.POST:
 		del_contact = request.POST['del_contact']
+		cur.execute("SELECT message_id FROM message JOIN target on message.tid = target.tid WHERE target.contact = '%s'" % del_contact)
+		temp = cur.fetchone()
+		mid = temp[0]
 		cur.execute("DELETE FROM target WHERE contact = '%s'" % del_contact)
 		db.commit()
+		my_cron = CronTab(user=secrets.cron_user())
+		my_cron.remove_all(comment='%s' % mid)
+		my_cron.write()
 		return HttpResponseRedirect('/profile')
 	elif request.method == 'POST' and 'addtarget' in request.POST:
 		return addtarget(request)
@@ -176,6 +182,7 @@ def show_profile(request):
 		#print "Freq ", frequency
 		job.setall(frequency)
 		my_cron.write()
+		return HttpResponseRedirect('/')
 	return render(request, u'profile.html',{'user_targets_phone_mess':user_targets_contact_mess})#{'user_targets_sms':user_targets_sms,'user_target_phone':user_target_phone})
 
 @login_required
