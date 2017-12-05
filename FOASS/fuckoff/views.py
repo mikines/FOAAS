@@ -120,7 +120,8 @@ def show_profile(request):
 	if request.method == 'POST' and 'delete' in request.POST:
 		del_contact = request.POST['del_contact']
 		cur.execute("DELETE FROM target WHERE contact = '%s'" % del_contact)
-		return render(request,'profile.html')
+		db.commit()
+		return HttpResponseRedirect('/profile')
 	elif request.method == 'POST':
 		try:
 			weekday = str(int(request.POST[u'weekday']))
