@@ -18,7 +18,7 @@ table{
   border-style: double;
 }
 h1{
-  margin-left: 50px;
+  text-align:center
 }
 #user{
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -47,14 +47,16 @@ h1{
   <a href="/logout">logout</a>
   <h1> {{user.username}}'s profile:</h1>
 <div id=targetContainer>
-<tr>
-<th>
-	<td>Platform</td>
-	<td>Contact</td>
-	<td>Message</td>
-	<td>Frequency</td>
-</tr>
-</th>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Platform</th>
+      <th scope="col">Contact</th>
+      <th scope="col">Message</th>
+      <th scope="col">Frequency</th>
+    </tr>
+  </thead>
+  <tbody>
 {% for phone,mess in user_targets_phone_mess %}
 <tr>
 	<button id=messageEditFormbtn>Edit</button>
