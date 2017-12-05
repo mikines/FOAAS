@@ -34,22 +34,22 @@ h1{
 
 <body>
 	<div class=jumbotron style=margin-bottom:0;>
-	<h1>Whom The Fuck?</h1>
+	<h1>Tell Them to Fuck Off</h1>
 	<div class=container>
-	<p>Welcome to your fucking profile</p>
+	<p style=text-align:center;>Welcome to your fucking profile</p>
 	</div>
-</div>
+	</div>
 	<nav class="navbar navbar-inverse bg-inverse">
 	<ul class="navbar-nav ml-auto">
   	<a class="nav-link" href=/logout>logout</a>
-	</div>
-</nav>
+	</nav>
 
 {% if user.is_authenticated %}
 
 <div id=targetContainer style=padding-top:20px;>
   <h1> {{user.username}}'s profile:</h1>
-<div class="row col-md-8">
+<!--<div class="row col-md-8">-->
+<div class= container>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -61,7 +61,6 @@ h1{
       <th scope="col"></th>
     </tr>
   </thead>
-
 {% for platform,contact,mess,freq in user_targets_phone_mess %}
 <tr>
 	<td><button id={{contact}}>Edit</button></td>
@@ -125,7 +124,9 @@ Second: Enter a number 1-60 <input type=number name=second min=0 max=60 value=* 
 </form>
 </div>
 
-<form method=post>
+<div class=container style=padding-top:35px;>
+<h3 style=text-align:center>Add a target</h3>
+<form method=post style=text-align:center;>
 {% csrf_token %}
 Name:
 <input type=text name=tname >
@@ -133,9 +134,9 @@ Phone:
 <input type=text name=tphone >
 Twitter:
 <input type=text name=twit >
-<button type=submit name=addtarget>Create</button>
+<button type=submit name=addtarget>Add</button>
 </form>
-
+</div>
 
 
 
