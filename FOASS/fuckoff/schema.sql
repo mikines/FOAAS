@@ -17,9 +17,10 @@ CREATE TABLE user (
 
 CREATE TABLE target (
   tid int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  tname varchar(255) unique,
-  phone varchar(255) unique,
-  twitter varchar (255) unique
+  tname varchar(255),
+  contact varchar(255) unique
+--  phone varchar(255) unique,
+--  twitter varchar (255) unique
 --  message_id int(11),
 --  group_id int(11),
 --  Foreign key (message_id) references message(message_id) on delete cascade,

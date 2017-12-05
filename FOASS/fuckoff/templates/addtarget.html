@@ -1,17 +1,35 @@
 <html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 Add a target
 
 <form method=post>
 {% csrf_token %}
 Name:
-<input type=text name=tname>
+<input type=text name=tname >
 Phone:
-<input type=text name=tphone>
+<input type=text name=tphone >
 Twitter:
-<input type=text name=twit>
+<input type=text name=twit >
 <button type=submit>Create</button>
 </form>
+
+<script>
+$(document).ready( function() {
+	jQuery(function ($) {
+    var $inputs = $('input[name=tphone],input[name=twit]');
+    $inputs.change(function () {
+        // Set the required property of the other input to false if this input is not empty.
+        if($(this).val()!=""){
+			$inputs.not(this).prop({disabled:true}, !$(this).val().length);
+		}
+		else{
+			$inputs.not(this).prop({disabled:false}, !$(this).val().length);
+		}
+    });
+});
+});
+</script>
 
 </html>
 

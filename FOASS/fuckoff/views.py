@@ -91,16 +91,27 @@ def show_profile(request):
 		return login(request,message)
 	cur.execute("SELECT uid from user where username = '%s'" % user.username)
 	uid = cur.fetchone()
-	cur.execute(u"SELECT phone,text,frequency FROM message JOIN target ON message.tid=target.tid WHERE message.uid = '%s'" % uid)
+	cur.execute(u"SELECT contact,text,frequency FROM message JOIN target ON message.tid=target.tid WHERE message.uid = '%s'" % uid)
 	user_targets_sms = cur.fetchall()
-	user_target_phone = []
+	user_target_contact = []
 	user_target_mess = []
+	user_target_freq = []
 	for i in user_targets_sms:
-		user_target_phone += [i[0]]
-		user_target_mess += [i[1:]]
-	print "mess= ", user_target_mess
-	print "phone= ", user_target_phone
-	user_targets_phone_mess = zip(user_target_phone,user_target_mess)
+		user_target_contact += [i[0]]
+		user_target_mess += [i[1]]
+		user_target_freq += [i[2]]
+	user_target_plat = []
+	for i in user_target_contact:
+		if i.startswith('@'):
+			user_target_plat += ["Twitter"]
+		elif i.startswith('+'):
+			user_target_plat += ["Phone"]
+		else:
+			return "showprofile error"
+	
+	#print "mess= ", user_target_mess
+	#print "phone= ", user_target_phone
+	user_targets_contact_mess = zip(user_target_plat,user_target_contact,user_target_mess,user_target_freq)
 	#cur.execute("SELECT ")
 	#user_targets_phone = cur.fetchall()
 	#for i in user_targets_sms[1]:
@@ -108,35 +119,36 @@ def show_profile(request):
 	#print user_targets_sms
 	if request.method == 'POST':
 		try:
-			weekday = str(int(request.POST[u'weekday']) - 1)
+			weekday = str(int(request.POST[u'weekday']))
 		except:
 			weekday = '*'
 		try:
-			hour = int(request.POST[u'hour']) - 1
+			hour = str(int(request.POST[u'hour']) + 0)
 		except:
 			hour = u'*'
 		try:
-			minute = request.POST[u'minute'] - 1
+			minute = str(int(request.POST[u'minute']) + 0)
 		except:
 			minute = u'*'
 		try:
-			day = request.POST[u'day'] + 0
+			day = str(int(request.POST[u'day']) + 0)
 		except:
 			day = u'*'
 		try:
-			month = request.POST[u'month'] + 0
+			month = str(int(request.POST[u'month']) + 0)
 		except:
 			month = '*'
-		phone = request.POST['phone']
+		contact = request.POST['phone']
 		frequency = minute + " " + hour + " "  + day + " " + month + " " + weekday
-		print frequency
+		#print frequency
 		text = request.POST[u'fucksearchs']
 		param = inner_get_all_fucks(text)[0]
 		# MAKE MESSAGE TUPLE
 		# get tid from phone number
 		cur.execute('SELECT uid from user where username = "%s"' % request.user.username)
 		uid = cur.fetchone()[0]
-		cur.execute('SELECT tid FROM target WHERE phone = "%s"' % phone)
+		print "contact=", contact
+		cur.execute('SELECT tid FROM target WHERE contact = "%s"' % contact)
 		tid = cur.fetchone()[0]
 		cur.execute('SELECT message_id FROM message WHERE uid = "%s" AND tid = "%s"' % (uid,tid))
 		mid = cur.fetchone()[0]
@@ -154,29 +166,43 @@ def show_profile(request):
 		# get mid
 		# get command
 		job = my_cron.new(command= 'python /home/FOAAS/FOASS/fuckoff/fuckSender.py %s' % mid,comment='%s' % mid)
-		print "Freq ", frequency
+		#print "Freq ", frequency
 		job.setall(frequency)
 		my_cron.write()
-	return render(request, u'profile.html',{'user_targets_phone_mess':user_targets_phone_mess})#{'user_targets_sms':user_targets_sms,'user_target_phone':user_target_phone})
+	return render(request, u'profile.html',{'user_targets_phone_mess':user_targets_contact_mess})#{'user_targets_sms':user_targets_sms,'user_target_phone':user_target_phone})
 
 @login_required
 def addtarget(request):
-    if request.method == u'POST':
-        name = request.POST[u'tname']
-        print name
-        phone = request.POST[u'tphone']
-        twitter = request.POST[u'twit']
-        cur.execute(u'INSERT INTO target (tname,phone,twitter) values (%s,%s,%s)', (name, phone, twitter))
-        db.commit()
-        cur.execute("SELECT tid FROM target WHERE phone = '%s'" % (phone))
-        tid = cur.fetchone()
-        print tid
-        cur.execute("SELECT uid FROM user WHERE username = '%s'" % request.user.username)
-        uid = cur.fetchone()
-        print "uid= ", uid
-        cur.execute("INSERT INTO message (uid,tid) VALUES (%s,%s)", (uid,tid))
-        db.commit()
-    return render(request, u'addtarget.html')
+	if request.method == u'POST':
+		name = request.POST[u'tname']
+		#print name
+		#phone = request.POST[u'tphone']
+		#twitter = request.POST[u'twit']
+		contact = ""
+		try: 
+			twitter = request.POST['twit']
+			contact = "@" + twitter
+		except:
+			try:
+				phone = request.POST['tphone']
+				contact = "+" + phone
+			except:
+				return "addtarget error"
+		#elif request.POST['tphone']:
+		#	contact = "+" + phone
+		#else:
+		#	return "addtarget error"
+		cur.execute(u'INSERT INTO target (tname,contact) values (%s,%s)', (name, contact))
+		db.commit()
+		cur.execute("SELECT tid FROM target WHERE contact = '%s'" % (contact))
+		tid = cur.fetchone()
+		#print tid
+		cur.execute("SELECT uid FROM user WHERE username = '%s'" % request.user.username)
+		uid = cur.fetchone()
+		#print "uid= ", uid
+		cur.execute("INSERT INTO message (uid,tid) VALUES (%s,%s)", (uid,tid))
+		db.commit()
+	return render(request, u'addtarget.html')
 
 @login_required
 def addmessage(request):
