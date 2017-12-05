@@ -8,10 +8,16 @@
     width: 100%;
   }
   h1{
+    color : white;
 
-    text-align: center
+    background-color: #007ee5
   }
-  h2 {
+  h2{
+    color : white;
+    text-indent: 5em; 
+    background-color: #007ee5
+}
+  h3 {
     display: block;
     font-size: 1em;
 
@@ -22,7 +28,7 @@
     width:500px;
     height:500px;
 }
-#username, #password {
+  #username, #password {
     width: 100%;
     padding: 12px 20px;
     margin: 12px 0;
@@ -30,4 +36,5 @@
     border: 1px solid #ccc;
     box-sizing: border-box;
   }
+
 
