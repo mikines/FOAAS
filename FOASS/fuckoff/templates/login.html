@@ -2,24 +2,31 @@
 <html>
 <title>FOAAS</title>
 {% load staticfiles %}
-<head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
 <link type=text/css href={% static "style.css" %} rel=stylesheet />
-</head>
+
+
 
 <body>
-<h1>Welcome to FOAAS</h1>
+	<div class=jumbotron style=margin-bottom:0;>
+	<h1>Welcome to Fucks</h1>
+	<div class=container>
+	<p>Log the fuck in</p>
+	</div>
+	</div>
+
 <h2>Shake off the annoying spam </h2> 
 
 <p id="demo"></p>
 <div id=login>
 {{ message }}
 <h3>log in with your twitter account</h3>
-
-	<!--<label><b>Username</b></label>
-	<input id=username type=text placeholder="Enter your username">
-	<label><b>Password</b></label>
-	<input id=password type=password placeholder="Enter your password">
--->
 	<form method=post>{% csrf_token %}<button type="submit">Log in</button></form>
 </div>
 

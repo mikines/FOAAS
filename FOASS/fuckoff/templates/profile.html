@@ -33,21 +33,22 @@ h1{
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 <body>
-	<div class=jumbotron>
+	<div class=jumbotron style=margin-bottom:0;>
 	<h1>Whom The Fuck?</h1>
+	<div class=container>
 	<p>Welcome to your fucking profile</p>
-
+	</div>
 </div>
 	<nav class="navbar navbar-inverse bg-inverse">
-	<div class=container style=width:10px;length:20px;>
-  	<a class=nav-link href=/logout>logout</a>
+	<ul class="navbar-nav ml-auto">
+  	<a class="nav-link" href=/logout>logout</a>
 	</div>
 </nav>
 
 {% if user.is_authenticated %}
 
+<div id=targetContainer style=padding-top:20px;>
   <h1> {{user.username}}'s profile:</h1>
-<div id=targetContainer>
 <div class="row col-md-8">
 <table class="table table-striped">
   <thead>
