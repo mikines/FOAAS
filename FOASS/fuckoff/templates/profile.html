@@ -59,10 +59,14 @@ h1{
 {% for platform,contact,mess,freq in user_targets_phone_mess %}
 <tr>
 	<td><button id={{contact}}>Edit</button></td>
+<form method=post>
+{% csrf_token %}
 	<td>{{ platform }}</td>
-	<td>{{ contact }}</td>
+	<td>{{ contact }}</td><input type=hidden value={{contact}} name=del_contact>
 	<td>{{ mess }}</td>
 	<td>{{ freq }}</td>
+	<td><button action=submit name=delete>X</button></td>
+</form>
 {% endfor %}
 
 </tr>

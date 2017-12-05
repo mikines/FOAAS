@@ -117,7 +117,11 @@ def show_profile(request):
 	#for i in user_targets_sms[1]:
 	#	i = get_fucks_text(i) #replace /.. with actual text
 	#print user_targets_sms
-	if request.method == 'POST':
+	if request.method == 'POST' and 'delete' in request.POST:
+		del_contact = request.POST['del_contact']
+		cur.execute("DELETE FROM target WHERE contact = '%s'" % del_contact)
+		return render(request,'profile.html')
+	elif request.method == 'POST':
 		try:
 			weekday = str(int(request.POST[u'weekday']))
 		except:
