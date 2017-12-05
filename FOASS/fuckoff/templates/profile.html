@@ -34,18 +34,19 @@ h1{
   <a href="/logout">logout</a>
   <h1> {{user.username}}'s profile:</h1>
 <div id=targetContainer>
+<div class="row col-md-8">
 <table class="table table-striped">
   <thead>
     <tr>
-      <th style="width: 10%"></th>
-      <th style="width: 15%">Platform</th>
-      <th style="width: 20%">Contact</th>
-      <th style="width: 20%">Message</th>
-      <th style="width: 15%">Frequency</th>
-      <th style="width: 10%"></th>
+      <th scope="col"></th>
+      <th scope="col">Platform</th>
+      <th scope="col">Contact</th>
+      <th scope="col">Message</th>
+      <th scope="col">Frequency</th>
+      <th scope="col"></th>
     </tr>
   </thead>
-  
+
 {% for platform,contact,mess,freq in user_targets_phone_mess %}
 <tr>
 	<td><button id={{contact}}>Edit</button></td>
