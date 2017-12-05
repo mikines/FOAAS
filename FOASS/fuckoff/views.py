@@ -122,6 +122,8 @@ def show_profile(request):
 		cur.execute("DELETE FROM target WHERE contact = '%s'" % del_contact)
 		db.commit()
 		return HttpResponseRedirect('/profile')
+	elif request.method == 'POST' and 'addtarget' in request.POST:
+		return addtarget(request)
 	elif request.method == 'POST':
 		try:
 			weekday = str(int(request.POST[u'weekday']))
@@ -207,7 +209,8 @@ def addtarget(request):
 		#print "uid= ", uid
 		cur.execute("INSERT INTO message (uid,tid) VALUES (%s,%s)", (uid,tid))
 		db.commit()
-	return render(request, u'addtarget.html')
+#	return render(request, u'addtarget.html')
+	return HttpResponseRedirect('/')
 
 @login_required
 def addmessage(request):
