@@ -10,7 +10,7 @@
 	<div class=container>
 	<h1 style=text-align:center;>Validate a phone number</h1>
 	<div class=container>
-	<p style=text-align:center;>You must validate a phone number before you send messages to it because we tell people to fuck off without being fucking inconsiderate spammers. (also because we're cheap fucks using the free Twilio trial)</p>
+	<p style=text-align:center;>You must validate a phone number before you send messages to because we're cheap fucks using the free Twilio trial</p>
 	</div>
 	</div>
 	</div>
@@ -24,18 +24,19 @@
 	</ul>
 	</div>
 	</nav>
-<div class=container-fluid>
-<div class="col-xs-4 col-xs-offset-1" style=padding-top:20px;>
-<form method=post>
-Phone number: <input type=text name=val_phone>
-<button type=submit>submit</button>
-</form>
-You'll get a call. Enter this code when prompted:
-</br>
-{{ code }}
+<div class=container style=text-align:center;padding-top:20px;>
+	<form method=post style="margin:0 auto;width:80%;float:none;">
+	Phone number: <input type=text name=val_phone>
+	</br>You'll get a call. Enter this code when prompted:
+	</br>
+	{{ code }}
+	<button type=submit>submit</button>
+	</form>
+	</br>
 </div>
-</div>
+
 </body>
 
+<script src="profile.js"></script>
 
 </html>
