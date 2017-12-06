@@ -9,10 +9,9 @@
   }
  h2{
   margin top: 0;
-  color: white;
-  text-indent: 3em; 
-  background-color: #000000
+  color: black;
   animation: float 4s;
+  text-align: center;
   -webkit-animation: float 4s;
 }
 @keyframes float{
@@ -30,7 +29,6 @@
     margin: 0;
     color: black;
     text-align: center;
-    background-color: #008cba
 }
   h3 {
     display: block;
