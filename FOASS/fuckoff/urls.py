@@ -13,4 +13,5 @@ urlpatterns = [
 	url(r'^add_mess',views.addmessage),
 	url(r'^logout',views.twit_logout),
 	url(r'^allfucks',views.get_all_fucks),
+	url(r'^validate',views.validate),
 ]

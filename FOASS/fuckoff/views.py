@@ -10,6 +10,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 import requests, secrets, MySQLdb
 from crontab import CronTab
 import re
+import twilio
+from twilio.rest import Client
 
 db = MySQLdb.connect(host=u'localhost', user=secrets.sqluser(), passwd=secrets.sqlpass(), db=u'fuckoff')
 cur = db.cursor()
@@ -184,6 +186,15 @@ def show_profile(request):
 		my_cron.write()
 		return HttpResponseRedirect('/')
 	return render(request, u'profile.html',{'user_targets_phone_mess':user_targets_contact_mess})#{'user_targets_sms':user_targets_sms,'user_target_phone':user_target_phone})
+
+@login_required
+def validate(request,validation_code=""):
+	if request.method == 'POST':
+		phone = request.POST['val_phone']
+		client = Client(secrets.twi_sid(),secrets.twi_token())
+		validation_request = client.validation_requests.create(phone,friendly_name="fuckoff_valid")
+		validation_code=validation_request.validation_code
+	return render(request,'validate.html',{'code':validation_code})
 
 @login_required
 def addtarget(request):

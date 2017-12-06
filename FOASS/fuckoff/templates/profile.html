@@ -30,19 +30,31 @@ h1{
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>-->
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 <body>
 	<div class=jumbotron style=margin-bottom:0;>
-	<h1>Tell Them to Fuck Off</h1>
 	<div class=container>
-	<p style=text-align:center;>Welcome to your fucking profile</p>
+	<h1>Tell Them to Fuck Off</h1>
+		<div class=container>
+		<p style=text-align:center;>Welcome to your fucking profile</p>
+		</div>
 	</div>
 	</div>
-	<nav class="navbar navbar-inverse bg-inverse">
-	<ul class="navbar-nav ml-auto">
-  	<a class="nav-link" href=/logout>logout</a>
-	</nav>
+	<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse ">
+	<div class=container>
+	<ul class="navbar-nav mr-auto">
+  	<li class="nav-item">
+		<a class="nav-link" href=/validate>validate</a></li>
+	</ul>
+		<ul class="navbar-nav ml-auto">
+  	<li class="nav-item">
+		<a class="nav-link" href=/logout>logout</a></li>
+	</ul>
+	</div>
+</nav>
 
 {% if user.is_authenticated %}
 
@@ -60,6 +72,7 @@ h1{
       <th scope="col"></th>
     </tr>
   </thead>
+
 {% for platform,contact,mess,freq in user_targets_phone_mess %}
 <tr>
 	<td><button id={{contact}}>Edit</button></td>
@@ -74,8 +87,9 @@ h1{
 {% endfor %}
 
 </tr>
-</table>
 
+</table>
+</br>
 </div>
 
 </div>
@@ -130,16 +144,16 @@ Second: Enter a number 1-60 <input type=number name=second min=0 max=60 value=* 
 
 
 <div class=container style=padding-top:35px;>
-<h3 style=text-align:center>Add a target</h3>
 <form method=post style=text-align:center;>
+<h3 style=text-align:center>Add a target</h3>
 {% csrf_token %}
 Name:
 <input type=text name=tname >
-Phone:
+</br>Phone:
 <input type=text name=tphone >
-Twitter:
+</br>Twitter:
 <input type=text name=twit >
-<button type=submit name=addtarget>Add</button>
+</br><button type=submit name=addtarget>Add</button>
 </form>
 </div>
 
