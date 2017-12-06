@@ -1,5 +1,5 @@
   button {
-    background-color: #4CAF50;
+    background-color: #006400;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -7,10 +7,11 @@
     cursor: pointer;
     width: 100%;
   }
- h1{
-  margin: 0;
+ h2{
+  margin top: 0;
   color: white;
-  background-color: #3b5998
+  text-indent: 3em; 
+  background-color: #000000
   animation : float 4s;
   -webkit-animation: float 4s;
 }
@@ -25,11 +26,11 @@
   50%{opacity:0%;}
   100%{opacoty:100%;}
 }
-  h2{
-    margin top: 0;
-    color : white;
-    text-indent: 3em; 
-    background-color: #3b5998
+  h1{
+    margin: 0;
+    color : black;
+    text-align: center;
+    background-color: #008cba
 }
   h3 {
     display: block;
