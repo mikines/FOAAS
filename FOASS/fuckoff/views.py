@@ -12,6 +12,8 @@ from crontab import CronTab
 import re
 import twilio
 from twilio.rest import Client
+from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 
 db = MySQLdb.connect(host=u'localhost', user=secrets.sqluser(), passwd=secrets.sqlpass(), db=u'fuckoff')
 cur = db.cursor()
@@ -130,9 +132,67 @@ def show_profile(request):
 		my_cron.remove_all(comment='%s' % mid)
 		my_cron.write()
 		return HttpResponseRedirect('/profile')
-	elif request.method == 'POST' and 'addtarget' in request.POST:
-		return addtarget(request)
-	elif request.method == 'POST':
+	elif request.method == "POST":
+		contact = request.POST['del_contact']
+		print contact
+		request.session['phone']=contact
+		return HttpResponseRedirect('/add_mess')
+	else:
+	#elif request.method == 'POST' and 'addtarget' in request.POST:
+	#	return addtarget(request)
+	#elif request.method == 'POST':
+		return render(request, u'profile.html',{'user_targets_phone_mess':user_targets_contact_mess})#{'user_targets_sms':user_targets_sms,'user_target_phone':user_target_phone})
+
+@login_required
+def validate(request):
+	validation_code = ""
+	if request.method == 'POST':
+		phone = request.POST['val_phone']
+		client = Client(secrets.twi_sid(),secrets.twi_tok())
+		validation_request = client.validation_requests.create(phone,friendly_name="fuckoff_valid")
+		validation_code=validation_request.validation_code
+	return render(request,'validate.html',{'code':validation_code})
+
+@login_required
+def addtarget(request,edit_phone=""):
+	if request.method == u'POST':
+		name = request.POST[u'tname']
+		#print name
+		#phone = request.POST[u'tphone']
+		#twitter = request.POST[u'twit']
+		contact = ""
+		try: 
+			twitter = request.POST['twit']
+			contact = "@" + twitter
+		except:
+			try:
+				phone = request.POST['tphone']
+				contact = "+" + phone
+			except:
+				return "addtarget error"
+		#elif request.POST['tphone']:
+		#	contact = "+" + phone
+		#else:
+		#	return "addtarget error"
+		cur.execute(u'INSERT INTO target (tname,contact) values (%s,%s)', (name, contact))
+		db.commit()
+		cur.execute("SELECT tid FROM target WHERE contact = '%s'" % (contact))
+		tid = cur.fetchone()
+		#print tid
+		cur.execute("SELECT uid FROM user WHERE username = '%s'" % request.user.username)
+		uid = cur.fetchone()
+		#print "uid= ", uid
+		cur.execute("INSERT INTO message (uid,tid) VALUES (%s,%s)", (uid,tid))
+		db.commit()
+		return HttpResponseRedirect('/')
+#	return render(request, u'addtarget.html')
+	return render(request,'addtarget.html')
+
+@login_required
+def addmessage(request,contact=""):
+	contact = request.session['phone']
+	print contact
+	if request.method == u'POST':
 		try:
 			weekday = str(int(request.POST[u'weekday']))
 		except:
@@ -154,6 +214,8 @@ def show_profile(request):
 		except:
 			month = '*'
 		contact = request.POST['phone']
+		#contact = contact[1:]
+		#del_contact=request.POST['del_contact']
 		frequency = minute + " " + hour + " "  + day + " " + month + " " + weekday
 		#print frequency
 		text = request.POST[u'fucksearchs']
@@ -185,57 +247,7 @@ def show_profile(request):
 		job.setall(frequency)
 		my_cron.write()
 		return HttpResponseRedirect('/')
-	return render(request, u'profile.html',{'user_targets_phone_mess':user_targets_contact_mess})#{'user_targets_sms':user_targets_sms,'user_target_phone':user_target_phone})
-
-@login_required
-def validate(request,validation_code=""):
-	if request.method == 'POST':
-		phone = request.POST['val_phone']
-		client = Client(secrets.twi_sid(),secrets.twi_token())
-		validation_request = client.validation_requests.create(phone,friendly_name="fuckoff_valid")
-		validation_code=validation_request.validation_code
-	return render(request,'validate.html',{'code':validation_code})
-
-@login_required
-def addtarget(request):
-	if request.method == u'POST':
-		name = request.POST[u'tname']
-		#print name
-		#phone = request.POST[u'tphone']
-		#twitter = request.POST[u'twit']
-		contact = ""
-		try: 
-			twitter = request.POST['twit']
-			contact = "@" + twitter
-		except:
-			try:
-				phone = request.POST['tphone']
-				contact = "+" + phone
-			except:
-				return "addtarget error"
-		#elif request.POST['tphone']:
-		#	contact = "+" + phone
-		#else:
-		#	return "addtarget error"
-		cur.execute(u'INSERT INTO target (tname,contact) values (%s,%s)', (name, contact))
-		db.commit()
-		cur.execute("SELECT tid FROM target WHERE contact = '%s'" % (contact))
-		tid = cur.fetchone()
-		#print tid
-		cur.execute("SELECT uid FROM user WHERE username = '%s'" % request.user.username)
-		uid = cur.fetchone()
-		#print "uid= ", uid
-		cur.execute("INSERT INTO message (uid,tid) VALUES (%s,%s)", (uid,tid))
-		db.commit()
-#	return render(request, u'addtarget.html')
-	return HttpResponseRedirect('/')
-
-@login_required
-def addmessage(request):
-    #if request.method == u'POST':
-                #print day
-        #print u'hour=', hour
-    return render(request, u'addmessage.html')
+	return render(request, u'addmessage.html',{'edit_phone':contact})
 
 
 @csrf_exempt

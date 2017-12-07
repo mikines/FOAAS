@@ -47,7 +47,13 @@ h1{
 	<div class=container>
 	<ul class="navbar-nav mr-auto">
   	<li class="nav-item">
+		<a class="nav-link" href=/profile>profile</a></li>
+	<li class="nav-item">
 		<a class="nav-link" href=/validate>validate</a></li>
+<li class="nav-item">
+		<a class="nav-link" href=/add_target>add target</a></li>
+<li class="nav-item">
+		<a class="nav-link" href=/add_mess>edit message</a></li>
 	</ul>
 		<ul class="navbar-nav ml-auto">
   	<li class="nav-item">
@@ -75,9 +81,9 @@ h1{
 
 {% for platform,contact,mess,freq in user_targets_phone_mess %}
 <tr>
-	<td><button id={{contact}}>Edit</button></td>
 <form method=post>
 {% csrf_token %}
+	<td><button id={{contact}}>Edit</button></td>
 	<td>{{ platform }}</td>
 	<td>{{ contact }}</td><input type=hidden value={{contact}} name=del_contact>
 	<td>{{ mess }}</td>
@@ -92,71 +98,6 @@ h1{
 </br>
 </div>
 
-</div>
-<div class=container id=messageEditForm style=display:none;text-align:center;padding-top:30px;>
-	<form method=post>
-{% csrf_token %}
-
-<h4 style=txt-align:center;>Editing message settings for <input type=text value="" name=phone id=hidcontact readonly style=border:none;></h4>
-search for a keyword
-<input type=text id=fucksearch name=fucksearchs>
-<div id=searchresults></div>
-</br>
-Month:<select name=month>
-	<option value='*'>Every Month</option>
-	<option value='1'>January</option>
-	<option value='2'>February</option>
-	<option value='3'>March</option>
-	<option value='4'>April</option>
-    <option value='5'>May</option>
-    <option value='6'>June</option>
-    <option value='7'>July</option>
-    <option value='8'>August</option>
-    <option value='9'>September</option>
-    <option value='10'>October</option>
-    <option value='11'>November</option>
-    <option value='12'>December</option>
-	</select>
-</br>
-Weekday: <select name=weekday>
-	<option value='*'>Every day</option>
-	<option value='0'>Sunday</option>
-    <option value='1'>Monday</option>
-    <option value='2'>Tuesday</option>
-    <option value='3'>Wednesday</option>
-    <option value='4'>Thursday</option>
-    <option value='5'>Friday</option>
-    <option value='6'>Saturday</option>
-	</select>
-</br>
-Day: Enter a number 1-31<input type=number name=day min=0 max=31 placeholder=* value=*>
-</br>
-Hour: Enter a number 1-24  <input type=number name=hour min=0 max=24 value=* placeholder=*>
-</br>
-Minute: Enter a number 1-60 <input type=number name=minute min=0 max=60 value=* placeholder=*>
-</br>
-Second: Enter a number 1-60 <input type=number name=second min=0 max=60 value=* placeholder=*>
-</br>
-
-<button action=submit id=submitbtn>submit</button>
-</form>
-</div>
-
-
-<div class=container style=padding-top:35px;>
-<form method=post style=text-align:center;>
-<h3 style=text-align:center>Add a target</h3>
-{% csrf_token %}
-Name:
-<input type=text name=tname >
-</br>Phone:
-<input type=text name=tphone >
-</br>Twitter:
-<input type=text name=twit >
-</br><button type=submit name=addtarget>Add</button>
-</form>
-</div>
-
 
 
 {% else %}
@@ -165,7 +106,7 @@ Name:
 {% endif %}
 <script src="profile.js"></script>
 <script>
-
+/*
 $(document).ready(function(){
 		$("#fucksearch").keyup(function() {
 		var txt = $("#fucksearch").val();
@@ -175,7 +116,7 @@ $(document).ready(function(){
 		});
 	});	
 });
-
+*/
 
 var btn_name="";
 
@@ -192,7 +133,7 @@ $(document).ready(function(){
 		$("#messageEditForm").toggle();
 	});
 });
-
+/*
 $(document).ready(function(){
     $("button[id^='@']").click(function(){
         btn_name = this.id;
@@ -200,7 +141,7 @@ $(document).ready(function(){
         $("#messageEditForm").toggle();
     });
 });
-
+*/
 $(document).ready( function() {
 	jQuery(function ($) {
     var $inputs = $('input[name=tphone],input[name=twit]');

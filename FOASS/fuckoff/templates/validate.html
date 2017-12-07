@@ -17,22 +17,35 @@
 	<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
 	<div class=container>
 	<ul class="navbar-nav mr-auto">
-  	<a class="nav-link" href=/profile>profile</a>
+	<li class="nav-item">
+		<a class="nav-link" href=/profile>profile</a></li>
+	<li class="nav-item">
+		<a class="nav-link" href=/validate>validate</a></li>
+<li class="nav-item">
+		<a class="nav-link" href=/add_target>add target</a></li>
+<li class="nav-item">
+		<a class="nav-link" href=/add_mess>edit message</a></li>
 	</ul>
 	<ul class="navbar-nav ml-auto">
-  	<a class="nav-link" href=/logout>logout</a>
+  	<li class=nav-item><a class="nav-link" href=/logout>logout</a></li>
 	</ul>
 	</div>
 	</nav>
-<div class=container style=text-align:center;padding-top:20px;>
+
+<div class="row col-md-12" style=text-align:center;padding-top:20px;>
 	<form method=post style="margin:0 auto;width:80%;float:none;">
-	Phone number: <input type=text name=val_phone>
-	</br>You'll get a call. Enter this code when prompted:
+	{% csrf_token %}
+	<div class=form-group>
+	<label for=phoneVal>Phone</label>
+	<input class=form-control id=phoneVal type=text name=val_phone aria-describedby=valHelp>
+	<small id=valHelp>The phone number you enter will be called. Enter the code below:</small>
+	</div>
 	</br>
-	{{ code }}
-	<button type=submit>submit</button>
+<big><big><big>{{ code }}</big></big></big>
+	</br>
+<big>Once that's done, you can add the number as a target.</big>
+	<button class="btn btn-outline-dark" type=submit>submit</button>
 	</form>
-	</br>
 </div>
 
 </body>

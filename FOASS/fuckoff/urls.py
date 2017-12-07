@@ -10,7 +10,7 @@ urlpatterns = [
 	url(r'^style.css',TemplateView.as_view(template_name="style.css")),
 	url(r'^test',TemplateView.as_view(template_name="foaas3.html")),
 	url(r'^add_target',views.addtarget),
-	url(r'^add_mess',views.addmessage),
+	url(r'^add_mess',views.addmessage,name='addmess'),
 	url(r'^logout',views.twit_logout),
 	url(r'^allfucks',views.get_all_fucks),
 	url(r'^validate',views.validate),

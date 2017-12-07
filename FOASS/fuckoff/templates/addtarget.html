@@ -1,19 +1,59 @@
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-Add a target
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<body>
+	<div class=jumbotron style=margin-bottom:0;>
+	<div class=container style=text-align:center;>
+	<h1>Add Your Targets</h1>
+		<div class=container>
+		<p style=text-align:center;>Add them fuckers here. If your phone numbers aren't validated, they won't work, you fucking idiot.</p>
+		</div>
+	</div>
+	</div>
+	<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse ">
+	<div class=container>
+	<ul class="navbar-nav mr-auto">
+  	<li class="nav-item">
+		<a class="nav-link" href=/profile>profile</a></li>
+	<li class="nav-item">
+		<a class="nav-link" href=/validate>validate</a></li>
+<li class="nav-item">
+		<a class="nav-link" href=/add_target>add target</a></li>
+<li class="nav-item">
+		<a class="nav-link" href=/add_mess>edit message</a></li>
+
+	</ul>
+		<ul class="navbar-nav ml-auto">
+  	<li class="nav-item">
+		<a class="nav-link" href=/logout>logout</a></li>
+	</ul>
+	</div>
+</nav>
+<div class=container style=text-align:center;padding-top:30px;>
 
 <form method=post>
 {% csrf_token %}
-Name:
-<input type=text name=tname >
-Phone:
-<input type=text name=tphone >
-Twitter:
-<input type=text name=twit >
-<button type=submit>Create</button>
+<div class=form-group>
+<label for=nameForm>Name</label>
+<input class=form-control id=nameForm type=text name=tname >
+</div>
+<div class=form-group>
+<label for=phoneForm>Phone</label>
+<input class=form-control id=phoneForm type=text name=tphone aria-describedby=phoneHelp>
+<small id=phoneHelp>Make sure the phone number is validated</small>
+</div>
+<div class=form-group>
+<label for=twitForm>Twitter</label>
+<input class=form-control id=twitForm type=text name=twit >
+</div>
+<button class="btn btn-outline-dark" type=submit>Create</button>
 </form>
 
+</div>
+</body>
 <script>
 $(document).ready( function() {
 	jQuery(function ($) {
